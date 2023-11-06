@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { RacesService } from './races.service';
 import { CreateRaceDto } from './dto/create-race.dto';
@@ -21,7 +22,8 @@ export class RacesController {
   }
 
   @Get()
-  findAll(@Param() params: any) {
+  findAll(@Query() params: any) {
+    // TODO Abstract params filtering and applying
     if (params.name) return this.racesService.findByName(params.name);
     return this.racesService.findAll();
   }
