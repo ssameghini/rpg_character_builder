@@ -11,6 +11,7 @@ import {
 import { RacesService } from './races.service';
 import { CreateRaceDto } from './dto/create-race.dto';
 import { UpdateRaceDto } from './dto/update-race.dto';
+import { parseQuery } from 'src/database/query';
 
 @Controller('races')
 export class RacesController {
@@ -22,15 +23,13 @@ export class RacesController {
   }
 
   @Get()
-  findAll(@Query() params: any) {
-    // TODO Abstract params filtering and applying
-    if (params.name) return this.racesService.findByName(params.name);
-    return this.racesService.findAll();
+  findAll(@Query() query: any) {
+    return this.racesService.find(parseQuery(query));
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.racesService.findOne(id);
+  findById(@Param('id') id: string) {
+    return this.racesService.findById(id);
   }
 
   @Patch(':id')

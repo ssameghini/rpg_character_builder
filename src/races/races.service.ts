@@ -14,11 +14,16 @@ export class RacesService {
     return newRace.save();
   }
 
-  findAll(): Promise<Race[]> {
-    return this.raceModel.find().exec();
+  find(params: any = {}): Promise<Race[]> {
+    const query = this.raceModel.find(params.filters, params.fields);
+    params.sort && query.sort(params.sort);
+    params.limit && query.limit(params.limit);
+    params.page && query.skip((params.page - 1) * params.limit);
+
+    return query.exec();
   }
 
-  findOne(id: string): Promise<Race | null> {
+  findById(id: string): Promise<Race | null> {
     return this.raceModel.findById(id).exec();
   }
 
