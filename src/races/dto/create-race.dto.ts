@@ -3,16 +3,14 @@ import { AbilityModifier } from 'types/modifiers';
 
 export class CreateRaceDto {
   @IsString()
-  name: string;
+  readonly name: string;
 
-  @IsOptional()
   @IsString()
-  size: string;
+  readonly size: string;
 
-  @IsOptional()
   @IsInt()
-  speed: number;
+  readonly speed: number;
 
   @IsOptional()
-  abilityModifiers: AbilityModifier;
+  readonly abilityModifiers: AbilityModifier;
 }

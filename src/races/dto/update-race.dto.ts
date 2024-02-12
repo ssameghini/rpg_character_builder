@@ -6,12 +6,12 @@ import { IsOptional, IsString } from 'class-validator';
 export class UpdateRaceDto extends PartialType(CreateRaceDto) {
   @IsOptional()
   @IsString()
-  size: string;
+  readonly size: string;
 
   @IsOptional()
   @IsString()
-  speed: number;
+  readonly speed: number;
 
   @IsOptional()
-  abilityModifiers: AbilityModifier;
+  readonly abilityModifiers: AbilityModifier;
 }
