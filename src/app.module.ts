@@ -17,6 +17,7 @@ import { RacesModule } from './races/races.module';
       }),
       inject: [ConfigService],
     }),
+    // If the variables need to be grouped, or set dinamically, use a custom config file
     ConfigModule.forRoot({
       envFilePath: [`.env.${process.env.NODE_ENV}`, '.env'],
       isGlobal: true,
