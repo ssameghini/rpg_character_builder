@@ -12,7 +12,8 @@ describe('RacesController', () => {
   let mongoConnection: Connection;
   let raceModel: Model<Race>;
 
-  beforeEach(async () => {
+  // Create module and provide in-memory database
+  beforeAll(async () => {
     mongod = await MongoMemoryServer.create();
     const uri = mongod.getUri();
     mongoConnection = (await connect(uri)).connection;
@@ -26,6 +27,22 @@ describe('RacesController', () => {
     }).compile();
 
     controller = module.get<RacesController>(RacesController);
+  });
+
+  // Close database connections after all tests
+  afterAll(async () => {
+    await mongoConnection.dropDatabase();
+    await mongoConnection.close();
+    await mongod.stop();
+  });
+
+  // Clean models between tests
+  afterEach(async () => {
+    const collections = mongoConnection.collections;
+    for (const key in collections) {
+      const collection = collections[key];
+      await collection.deleteMany();
+    }
   });
 
   it('should be defined', () => {
